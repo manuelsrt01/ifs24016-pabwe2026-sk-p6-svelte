@@ -10,7 +10,7 @@
 </script>
 
 <article class="overflow-hidden rounded-2xl border border-slate-200 bg-white shadow-sm transition hover:shadow-md">
-  <a {href} onclick={(event) => handleLinkClick(event, href)}>
+  <a {href} aria-label={`Buka ${linkTree.title}`} onclick={(event) => handleLinkClick(event, href)}>
     {#if hasCoverImage(linkTree.cover)}
       <img src={linkTree.cover} alt={`Cover ${linkTree.title}`} class="h-36 w-full object-cover" />
     {:else}

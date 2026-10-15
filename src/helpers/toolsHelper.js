@@ -1,26 +1,34 @@
-import Swal from "sweetalert2";
+const loadSwal = () => import("sweetalert2").then((module) => module.default);
 
 const baseOptions = {
   confirmButtonColor: "#4f46e5",
   cancelButtonColor: "#64748b",
 };
 
-export function showSuccessDialog(message, title = "Berhasil") {
+export async function showSuccessDialog(message, title = "Berhasil") {
+  const Swal = await loadSwal();
   return Swal.fire({ ...baseOptions, icon: "success", title, text: message });
 }
 
-export function showErrorDialog(message, title = "Gagal") {
+export async function showErrorDialog(message, title = "Gagal") {
+  const Swal = await loadSwal();
   return Swal.fire({ ...baseOptions, icon: "error", title, text: message });
 }
 
-export function showWarningDialog(message, title = "Perhatian") {
+export async function showWarningDialog(message, title = "Perhatian") {
+  const Swal = await loadSwal();
   return Swal.fire({ ...baseOptions, icon: "warning", title, text: message });
 }
 
 export async function showConfirmDialog(
   message,
-  { title = "Apakah Anda yakin?", confirmText = "Ya", cancelText = "Batal" } = {}
+  {
+    title = "Apakah Anda yakin?",
+    confirmText = "Ya",
+    cancelText = "Batal",
+  } = {},
 ) {
+  const Swal = await loadSwal();
   const result = await Swal.fire({
     ...baseOptions,
     icon: "warning",
@@ -38,7 +46,11 @@ export function formatDate(value) {
   if (!value) return "-";
   const date = new Date(value);
   if (Number.isNaN(date.getTime())) return "-";
-  return date.toLocaleDateString("id-ID", { day: "numeric", month: "long", year: "numeric" });
+  return date.toLocaleDateString("id-ID", {
+    day: "numeric",
+    month: "long",
+    year: "numeric",
+  });
 }
 
 export function hasCoverImage(cover) {
