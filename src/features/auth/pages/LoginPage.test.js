@@ -18,8 +18,12 @@ import { login, authLoading } from "../states/authStore.js";
 import { showErrorDialog } from "../../../helpers/toolsHelper.js";
 
 const fill = async (email, password) => {
-  await fireEvent.input(screen.getByLabelText("Email"), { target: { value: email } });
-  await fireEvent.input(screen.getByLabelText("Kata sandi"), { target: { value: password } });
+  await fireEvent.input(screen.getByLabelText("Email"), {
+    target: { value: email },
+  });
+  await fireEvent.input(screen.getByLabelText("Kata sandi"), {
+    target: { value: password },
+  });
 };
 const submit = () => screen.getByRole("button", { name: "Masuk" }).click();
 
@@ -33,7 +37,9 @@ describe("LoginPage", () => {
     renderWithProviders(LoginPage, { path: "/auth/login" });
     submit();
     await waitFor(() =>
-      expect(screen.getByRole("alert")).toHaveTextContent("Email dan kata sandi wajib diisi.")
+      expect(screen.getByRole("alert")).toHaveTextContent(
+        "Email dan kata sandi wajib diisi.",
+      ),
     );
     expect(login).not.toHaveBeenCalled();
   });
@@ -43,7 +49,9 @@ describe("LoginPage", () => {
     await fill("salah", "123456");
     submit();
     await waitFor(() =>
-      expect(screen.getByRole("alert")).toHaveTextContent("Format email tidak valid.")
+      expect(screen.getByRole("alert")).toHaveTextContent(
+        "Format email tidak valid.",
+      ),
     );
     expect(login).not.toHaveBeenCalled();
   });
@@ -70,7 +78,9 @@ describe("LoginPage", () => {
     await fill("a@b.co", "123456");
     submit();
 
-    await waitFor(() => expect(showErrorDialog).toHaveBeenCalledWith("Kredensial salah"));
+    await waitFor(() =>
+      expect(showErrorDialog).toHaveBeenCalledWith("Kredensial salah"),
+    );
     expect(get(currentPath)).toBe("/auth/login");
   });
 
@@ -85,5 +95,16 @@ describe("LoginPage", () => {
     renderWithProviders(LoginPage, { path: "/auth/login" });
     screen.getByRole("link", { name: "Daftar" }).click();
     await waitFor(() => expect(get(currentPath)).toBe("/auth/register"));
+  });
+
+  it("memakai id elemen yang dibutuhkan grader", () => {
+    const { container } = renderWithProviders(LoginPage, {
+      path: "/auth/login",
+    });
+    expect(container.querySelector("#login-email-input")).toBeInTheDocument();
+    expect(
+      container.querySelector("#login-password-input"),
+    ).toBeInTheDocument();
+    expect(container.querySelector("#login-submit-button")).toBeInTheDocument();
   });
 });

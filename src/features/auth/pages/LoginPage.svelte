@@ -36,19 +36,19 @@
 
 <form class="space-y-4" onsubmit={handleSubmit} novalidate>
   <div>
-    <label class={labelClass} for="login-email">Email</label>
-    <input id="login-email" type="email" autocomplete="email" class={inputClass} bind:value={$email} />
+    <label class={labelClass} for="login-email-input">Email</label>
+    <input id="login-email-input" type="email" autocomplete="email" class={inputClass} bind:value={$email} />
   </div>
   <div>
-    <label class={labelClass} for="login-password">Kata sandi</label>
-    <input id="login-password" type="password" autocomplete="current-password" class={inputClass} bind:value={$password} />
+    <label class={labelClass} for="login-password-input">Kata sandi</label>
+    <input id="login-password-input" type="password" autocomplete="current-password" class={inputClass} bind:value={$password} />
   </div>
 
   {#if errorText}
     <p class="text-sm text-rose-600" role="alert">{errorText}</p>
   {/if}
 
-  <button type="submit" class={`${primaryButton} w-full`} disabled={$authLoading}>
+  <button id="login-submit-button" type="submit" class={`${primaryButton} w-full`} disabled={$authLoading}>
     {$authLoading ? "Memproses..." : "Masuk"}
   </button>
 </form>
